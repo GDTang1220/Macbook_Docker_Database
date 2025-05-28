@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotWebChatHistory">
+    <option name="currentConversation">
+      <WebConversation>
+        <option name="session">
+          <ChatSession>
+            <option name="messages">
+              <list>
+                <UIChatMessage>
+                  <option name="command" value="" />
+                  <option name="content" value="对以下代码进行优化：" />
+                  <option name="cost" value="0" />
+                  <option name="createdAt" value="1748441025942" />
+                  <option name="localReferences">
+                    <list>
+                      <LocalReferences>
+                        <option name="isRequestStage" value="true" />
+                        <option name="range">
+                          <RefRange />
+                        </option>
+                        <option name="uri" value="{&quot;path&quot;:&quot;file:///Users/gordon/Documents/GitHub/2023hk/Macbook_Docker_Database/docker-compose.yaml&quot;}" />
+                      </LocalReferences>
+                      <LocalReferences>
+                        <option name="isRequestStage" value="true" />
+                        <option name="range">
+                          <RefRange />
+                        </option>
+                        <option name="uri" value="{&quot;path&quot;:&quot;file:///Users/gordon/Documents/GitHub/2023hk/Macbook_Docker_Database/docker-compose.yaml&quot;}" />
+                      </LocalReferences>
+                    </list>
+                  </option>
+                  <option name="parser">
+                    <SimpleMarkdownStreamParser>
+                      <option name="content" value="对以下代码进行优化：" />
+                      <option name="nodes">
+                        <list>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="对以下代码进行优化：" />
+                            <option name="contentId" value="1137927502" />
+                            <option name="settled" value="false" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                        </list>
+                      </option>
+                      <option name="parserState">
+                        <ParserState>
+                          <option name="column" value="9" />
+                          <option name="offset" value="10" />
+                          <option name="moveCursor" value="true" />
+                        </ParserState>
+                      </option>
+                    </SimpleMarkdownStreamParser>
+                  </option>
+                  <option name="range">
+                    <CodeActionChatRequestRange>
+                      <option name="start">
+                        <CodeActionChatRequestRangePosition />
+                      </option>
+                      <option name="end">
+                        <CodeActionChatRequestRangePosition>
+                          <option name="line" value="9" />
+                          <option name="character" value="10000" />
+                        </CodeActionChatRequestRangePosition>
+                      </option>
+                    </CodeActionChatRequestRange>
+                  </option>
+                  <option name="role" value="user" />
+                  <option name="selectedRanges">
+                    <list>
+                      <ChatSelectionInfo>
+                        <option name="type" value="start-conversation-add" />
+                        <option name="uri" value="file://$PROJECT_DIR$/docker-compose.yaml" />
+                        <option name="basename" value="docker-compose.yaml" />
+                        <option name="ext" value=".yaml" />
+                        <option name="languageId" value="yaml" />
+                        <option name="selectText" value="version: '3.8'&#10;&#10;services:&#10;  # Redis Service&#10;  redis:&#10;    image: redis:7.0&#10;    container_name: redis_202505&#10;    ports:&#10;      - &quot;6379:6379&quot;&#10;    volumes:&#10;      - ./docker/redis/redis-data:/data&#10;    command: redis-server --appendonly yes&#10;&#10;  # MySQL Service&#10;  mysql:&#10;    image: mysql:8.0.29&#10;    container_name: mysql_202505&#10;    ports:&#10;      - &quot;3306:3306&quot;&#10;    environment:&#10;      MYSQL_ROOT_PASSWORD: bk123$%^&#10;      MYSQL_DATABASE: gordon_db&#10;      MYSQL_USER: gordon&#10;      MYSQL_PASSWORD: bk123$%^&#10;    volumes:&#10;      - ./docker/mysql/mysql-data:/var/lib/mysql&#10;      - ./docker/mysql/mysql-init:/docker-entrypoint-initdb.d&#10;&#10;  # PHPMyAdmin Service&#10;  phpmyadmin:&#10;    image: phpmyadmin&#10;    container_name: phpmyadmin_202505&#10;    ports:&#10;      - &quot;8080:80&quot;&#10;    environment:&#10;      PMA_HOST: mysql_202505&#10;      PMA_USER: root&#10;      PMA_PASSWORD: bk123$%^&#10;    depends_on:&#10;      - mysql&#10;&#10;  setup:&#10;    profiles:&#10;      - setup&#10;    build:&#10;      context: setup/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    init: true&#10;    volumes:&#10;      - ./setup/entrypoint.sh:/entrypoint.sh:ro,Z&#10;      - ./setup/lib.sh:/lib.sh:ro,Z&#10;      - ./setup/roles:/roles:ro,Z&#10;    environment:&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}&#10;      METRICBEAT_INTERNAL_PASSWORD: ${METRICBEAT_INTERNAL_PASSWORD:-}&#10;      FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}&#10;      HEARTBEAT_INTERNAL_PASSWORD: ${HEARTBEAT_INTERNAL_PASSWORD:-}&#10;      MONITORING_INTERNAL_PASSWORD: ${MONITORING_INTERNAL_PASSWORD:-}&#10;      BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      - elasticsearch&#10;&#10;  #  Elasticsearch Service&#10;  elasticsearch:&#10;    build:&#10;      context: elasticsearch/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: elasticsearch_202505&#10;    volumes:&#10;      - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z&#10;      - ./docker/elasticsearch:/usr/share/elasticsearch/data:Z&#10;    ports:&#10;      - 9200:9200&#10;      - 9300:9300&#10;    environment:&#10;      node.name: elasticsearch&#10;      ES_JAVA_OPTS: -Xms512m -Xmx512m&#10;      # Bootstrap password.&#10;      # Used to initialize the keystore during the initial startup of&#10;      # Elasticsearch. Ignored on subsequent runs.&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}&#10;      # Use single node discovery in order to disable production mode and avoid bootstrap checks.&#10;      # see: https://www.elastic.co/docs/deploy-manage/deploy/self-managed/bootstrap-checks&#10;      discovery.type: single-node&#10;    networks:&#10;      - elk&#10;&#10;  # Logstash Service&#10;  logstash:&#10;    build:&#10;      context: logstash/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: logstash_202505&#10;    volumes:&#10;      - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z&#10;      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z&#10;    ports:&#10;      - 5044:5044&#10;      - 50000:50000/tcp&#10;      - 50000:50000/udp&#10;      - 9600:9600&#10;    environment:&#10;      LS_JAVA_OPTS: -Xms256m -Xmx256m&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      - elasticsearch&#10;&#10;  # Kibana Service&#10;  kibana:&#10;    build:&#10;      context: kibana/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: kibana_202505&#10;    volumes:&#10;      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z&#10;    ports:&#10;      - 5601:5601&#10;    environment:&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      - elasticsearch&#10;&#10;networks:&#10;  elk:&#10;    driver: bridge&#10;&#10;volumes:&#10;  elasticsearch:&#10;" />
+                      </ChatSelectionInfo>
+                    </list>
+                  </option>
+                  <option name="uri" value="file://$PROJECT_DIR$/docker-compose.yaml" />
+                  <option name="variables">
+                    <list />
+                  </option>
+                </UIChatMessage>
+                <UIChatMessage>
+                  <option name="actions">
+                    <list />
+                  </option>
+                  <option name="codebaseReferences">
+                    <list />
+                  </option>
+                  <option name="codebaseStatus" value="init" />
+                  <option name="command" value="" />
+                  <option name="content" value="I'll analyze the docker-compose.yaml file and suggest several optimizations:&#10;&#10;1. **Security Improvements**:&#10;- Remove hardcoded passwords (like `bk123$%^`) and use environment variables or Docker secrets&#10;- Add restart policies for critical services&#10;- Consider adding health checks for services&#10;&#10;2. **Resource Management**:&#10;- Add resource limits (CPU/memory) to prevent any single service from consuming too many resources&#10;- Adjust Java heap sizes based on your available system resources&#10;&#10;3. **Structure Improvements**:&#10;- Group related services together (ELK stack together, database services together)&#10;- Use consistent naming conventions (either all with _202505 suffix or none)&#10;- Consider using YAML anchors for repeated configurations&#10;&#10;4. **Performance Optimizations**:&#10;- Add proper volume drivers if needed&#10;- Consider adding read-only mounts where appropriate&#10;- Optimize port mappings (remove unnecessary exposed ports)&#10;&#10;Here's an optimized version with these improvements:&#10;&#10;```yaml&#10;version: '3.8'&#10;&#10;services:&#10;  # Database Services&#10;  redis:&#10;    image: redis:7.0&#10;    container_name: redis&#10;    ports:&#10;      - &quot;6379:6379&quot;&#10;    volumes:&#10;      - redis_data:/data&#10;    command: redis-server --appendonly yes&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD&quot;, &quot;redis-cli&quot;, &quot;ping&quot;]&#10;      interval: 5s&#10;      timeout: 3s&#10;      retries: 3&#10;&#10;  mysql:&#10;    image: mysql:8.0.29&#10;    container_name: mysql&#10;    ports:&#10;      - &quot;3306:3306&quot;&#10;    environment:&#10;      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}&#10;      MYSQL_DATABASE: ${MYSQL_DATABASE}&#10;      MYSQL_USER: ${MYSQL_USER}&#10;      MYSQL_PASSWORD: ${MYSQL_PASSWORD}&#10;    volumes:&#10;      - mysql_data:/var/lib/mysql&#10;      - ./docker/mysql/mysql-init:/docker-entrypoint-initdb.d:ro&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD&quot;, &quot;mysqladmin&quot;, &quot;ping&quot;, &quot;-h&quot;, &quot;localhost&quot;]&#10;      timeout: 20s&#10;      retries: 10&#10;&#10;  phpmyadmin:&#10;    image: phpmyadmin&#10;    container_name: phpmyadmin&#10;    ports:&#10;      - &quot;8080:80&quot;&#10;    environment:&#10;      PMA_HOST: mysql&#10;      PMA_USER: root&#10;      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}&#10;    depends_on:&#10;      mysql:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;&#10;  # ELK Stack Services&#10;  elasticsearch:&#10;    build:&#10;      context: elasticsearch/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: elasticsearch&#10;    volumes:&#10;      - elasticsearch_config:/usr/share/elasticsearch/config:ro&#10;      - elasticsearch_data:/usr/share/elasticsearch/data&#10;    ports:&#10;      - 9200:9200&#10;      - 9300:9300&#10;    environment:&#10;      node.name: elasticsearch&#10;      ES_JAVA_OPTS: -Xms1g -Xmx1g&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}&#10;      discovery.type: single-node&#10;    networks:&#10;      - elk&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD-SHELL&quot;, &quot;curl -s -k http://localhost:9200&quot;]&#10;      interval: 10s&#10;      timeout: 10s&#10;      retries: 5&#10;&#10;  logstash:&#10;    build:&#10;      context: logstash/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: logstash&#10;    volumes:&#10;      - ./docker/logstash/config:/usr/share/logstash/config:ro&#10;      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline:ro&#10;    ports:&#10;      - 5044:5044&#10;      - 50000:50000/tcp&#10;      - 50000:50000/udp&#10;    environment:&#10;      LS_JAVA_OPTS: -Xms512m -Xmx512m&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;    deploy:&#10;      resources:&#10;        limits:&#10;          cpus: '1'&#10;          memory: 1G&#10;&#10;  kibana:&#10;    build:&#10;      context: kibana/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: kibana&#10;    volumes:&#10;      - ./kibana/config:/usr/share/kibana/config:ro&#10;    ports:&#10;      - 5601:5601&#10;    environment:&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;&#10;  setup:&#10;    profiles:&#10;      - setup&#10;    build:&#10;      context: setup/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    init: true&#10;    volumes:&#10;      - ./setup/entrypoint.sh:/entrypoint.sh:ro&#10;      - ./setup/lib.sh:/lib.sh:ro&#10;      - ./setup/roles:/roles:ro&#10;    environment:&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;&#10;networks:&#10;  elk:&#10;    driver: bridge&#10;&#10;volumes:&#10;  redis_data:&#10;  mysql_data:&#10;  elasticsearch_config:&#10;  elasticsearch_data:&#10;```&#10;&#10;Key changes made:&#10;1. Replaced hardcoded passwords with environment variables&#10;2. Added health checks for critical services&#10;3. Added restart policies&#10;4. Improved volume management with named volumes&#10;5. Added resource limits for Java services&#10;6. Removed unnecessary container name suffixes&#10;7. Improved service dependencies with health conditions&#10;8. Grouped related services together&#10;9. Added read-only mounts where appropriate&#10;10. Simplified port mappings where possible&#10;&#10;Remember to:&#10;1. Create a `.env` file for all the environment variables&#10;2. Adjust memory settings based on your host machine's resources&#10;3. Consider adding logging configurations for production use&#10;4. Review security settings before deploying to production" />
+                  <option name="cost" value="61838" />
+                  <option name="createdAt" value="1748441087795" />
+                  <option name="followup">
+                    <list />
+                  </option>
+                  <option name="id" value="01971734cd95722aa1fd863a99fbb381" />
+                  <option name="knowledgeReferences">
+                    <list />
+                  </option>
+                  <option name="localReferences">
+                    <list>
+                      <LocalReferences>
+                        <option name="isRequestStage" value="true" />
+                        <option name="range">
+                          <RefRange />
+                        </option>
+                        <option name="uri" value="{&quot;path&quot;:&quot;file:///Users/gordon/Documents/GitHub/2023hk/Macbook_Docker_Database/docker-compose.yaml&quot;}" />
+                      </LocalReferences>
+                      <LocalReferences>
+                        <option name="isRequestStage" value="true" />
+                        <option name="range">
+                          <RefRange />
+                        </option>
+                        <option name="uri" value="{&quot;path&quot;:&quot;file:///Users/gordon/Documents/GitHub/2023hk/Macbook_Docker_Database/docker-compose.yaml&quot;}" />
+                      </LocalReferences>
+                    </list>
+                  </option>
+                  <option name="parser">
+                    <SimpleMarkdownStreamParser>
+                      <option name="columns">
+                        <list>
+                          <option value="75" />
+                          <option value="-1" />
+                          <option value="28" />
+                          <option value="93" />
+                          <option value="43" />
+                          <option value="43" />
+                          <option value="-1" />
+                          <option value="26" />
+                          <option value="97" />
+                          <option value="64" />
+                          <option value="-1" />
+                          <option value="29" />
+                          <option value="81" />
+                          <option value="75" />
+                          <option value="56" />
+                          <option value="-1" />
+                          <option value="32" />
+                          <option value="36" />
+                          <option value="51" />
+                          <option value="58" />
+                          <option value="-1" />
+                          <option value="51" />
+                          <option value="-1" />
+                          <option value="6" />
+                          <option value="13" />
+                          <option value="-1" />
+                          <option value="8" />
+                          <option value="20" />
+                          <option value="7" />
+                          <option value="19" />
+                          <option value="24" />
+                          <option value="9" />
+                          <option value="18" />
+                          <option value="11" />
+                          <option value="23" />
+                          <option value="41" />
+                          <option value="26" />
+                          <option value="15" />
+                          <option value="39" />
+                          <option value="17" />
+                          <option value="16" />
+                          <option value="15" />
+                          <option value="-1" />
+                          <option value="7" />
+                          <option value="22" />
+                          <option value="24" />
+                          <option value="9" />
+                          <option value="18" />
+                          <option value="15" />
+                          <option value="48" />
+                          <option value="38" />
+                          <option value="30" />
+                          <option value="38" />
+                          <option value="11" />
+                          <option value="32" />
+                          <option value="63" />
+                          <option value="26" />
+                          <option value="15" />
+                          <option value="59" />
+                          <option value="17" />
+                          <option value="16" />
+                          <option value="-1" />
+                          <option value="12" />
+                          <option value="20" />
+                          <option value="29" />
+                          <option value="9" />
+                          <option value="16" />
+                          <option value="15" />
+                          <option value="20" />
+                          <option value="19" />
+                          <option value="41" />
+                          <option value="14" />
+                          <option value="11" />
+                          <option value="33" />
+                          <option value="26" />
+                          <option value="-1" />
+                          <option value="21" />
+                          <option value="15" />
+                          <option value="9" />
+                          <option value="28" />
+                          <option value="10" />
+                          <option value="42" />
+                          <option value="32" />
+                          <option value="11" />
+                          <option value="62" />
+                          <option value="55" />
+                          <option value="9" />
+                          <option value="16" />
+                          <option value="16" />
+                          <option value="15" />
+                          <option value="29" />
+                          <option value="32" />
+                          <option value="42" />
+                          <option value="32" />
+                          <option value="12" />
+                          <option value="10" />
+                          <option value="26" />
+                          <option value="15" />
+                          <option value="60" />
+                          <option value="18" />
+                          <option value="17" />
+                          <option value="15" />
+                          <option value="-1" />
+                          <option value="10" />
+                          <option value="9" />
+                          <option value="23" />
+                          <option value="10" />
+                          <option value="42" />
+                          <option value="27" />
+                          <option value="11" />
+                          <option value="61" />
+                          <option value="65" />
+                          <option value="9" />
+                          <option value="16" />
+                          <option value="22" />
+                          <option value="22" />
+                          <option value="15" />
+                          <option value="36" />
+                          <option value="62" />
+                          <option value="12" />
+                          <option value="10" />
+                          <option value="14" />
+                          <option value="19" />
+                          <option value="33" />
+                          <option value="26" />
+                          <option value="10" />
+                          <option value="15" />
+                          <option value="14" />
+                          <option value="18" />
+                          <option value="19" />
+                          <option value="-1" />
+                          <option value="8" />
+                          <option value="9" />
+                          <option value="21" />
+                          <option value="10" />
+                          <option value="42" />
+                          <option value="25" />
+                          <option value="11" />
+                          <option value="50" />
+                          <option value="9" />
+                          <option value="16" />
+                          <option value="15" />
+                          <option value="54" />
+                          <option value="12" />
+                          <option value="10" />
+                          <option value="14" />
+                          <option value="19" />
+                          <option value="33" />
+                          <option value="26" />
+                          <option value="-1" />
+                          <option value="7" />
+                          <option value="12" />
+                          <option value="12" />
+                          <option value="9" />
+                          <option value="20" />
+                          <option value="10" />
+                          <option value="42" />
+                          <option value="13" />
+                          <option value="11" />
+                          <option value="46" />
+                          <option value="32" />
+                          <option value="30" />
+                          <option value="15" />
+                          <option value="42" />
+                          <option value="62" />
+                          <option value="54" />
+                          <option value="12" />
+                          <option value="10" />
+                          <option value="14" />
+                          <option value="19" />
+                          <option value="33" />
+                          <option value="-1" />
+                          <option value="8" />
+                          <option value="5" />
+                          <option value="17" />
+                          <option value="-1" />
+                          <option value="7" />
+                          <option value="12" />
+                          <option value="12" />
+                          <option value="22" />
+                          <option value="20" />
+                          <option value="2" />
+                          <option value="-1" />
+                          <option value="16" />
+                          <option value="57" />
+                          <option value="43" />
+                          <option value="24" />
+                          <option value="47" />
+                          <option value="41" />
+                          <option value="45" />
+                          <option value="54" />
+                          <option value="35" />
+                          <option value="42" />
+                          <option value="42" />
+                          <option value="-1" />
+                          <option value="11" />
+                          <option value="56" />
+                          <option value="63" />
+                          <option value="59" />
+                          <option value="57" />
+                        </list>
+                      </option>
+                      <option name="content" value="I'll analyze the docker-compose.yaml file and suggest several optimizations:&#10;&#10;1. **Security Improvements**:&#10;- Remove hardcoded passwords (like `bk123$%^`) and use environment variables or Docker secrets&#10;- Add restart policies for critical services&#10;- Consider adding health checks for services&#10;&#10;2. **Resource Management**:&#10;- Add resource limits (CPU/memory) to prevent any single service from consuming too many resources&#10;- Adjust Java heap sizes based on your available system resources&#10;&#10;3. **Structure Improvements**:&#10;- Group related services together (ELK stack together, database services together)&#10;- Use consistent naming conventions (either all with _202505 suffix or none)&#10;- Consider using YAML anchors for repeated configurations&#10;&#10;4. **Performance Optimizations**:&#10;- Add proper volume drivers if needed&#10;- Consider adding read-only mounts where appropriate&#10;- Optimize port mappings (remove unnecessary exposed ports)&#10;&#10;Here's an optimized version with these improvements:&#10;&#10;```yaml&#10;version: '3.8'&#10;&#10;services:&#10;  # Database Services&#10;  redis:&#10;    image: redis:7.0&#10;    container_name: redis&#10;    ports:&#10;      - &quot;6379:6379&quot;&#10;    volumes:&#10;      - redis_data:/data&#10;    command: redis-server --appendonly yes&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD&quot;, &quot;redis-cli&quot;, &quot;ping&quot;]&#10;      interval: 5s&#10;      timeout: 3s&#10;      retries: 3&#10;&#10;  mysql:&#10;    image: mysql:8.0.29&#10;    container_name: mysql&#10;    ports:&#10;      - &quot;3306:3306&quot;&#10;    environment:&#10;      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}&#10;      MYSQL_DATABASE: ${MYSQL_DATABASE}&#10;      MYSQL_USER: ${MYSQL_USER}&#10;      MYSQL_PASSWORD: ${MYSQL_PASSWORD}&#10;    volumes:&#10;      - mysql_data:/var/lib/mysql&#10;      - ./docker/mysql/mysql-init:/docker-entrypoint-initdb.d:ro&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD&quot;, &quot;mysqladmin&quot;, &quot;ping&quot;, &quot;-h&quot;, &quot;localhost&quot;]&#10;      timeout: 20s&#10;      retries: 10&#10;&#10;  phpmyadmin:&#10;    image: phpmyadmin&#10;    container_name: phpmyadmin&#10;    ports:&#10;      - &quot;8080:80&quot;&#10;    environment:&#10;      PMA_HOST: mysql&#10;      PMA_USER: root&#10;      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}&#10;    depends_on:&#10;      mysql:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;&#10;  # ELK Stack Services&#10;  elasticsearch:&#10;    build:&#10;      context: elasticsearch/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: elasticsearch&#10;    volumes:&#10;      - elasticsearch_config:/usr/share/elasticsearch/config:ro&#10;      - elasticsearch_data:/usr/share/elasticsearch/data&#10;    ports:&#10;      - 9200:9200&#10;      - 9300:9300&#10;    environment:&#10;      node.name: elasticsearch&#10;      ES_JAVA_OPTS: -Xms1g -Xmx1g&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}&#10;      discovery.type: single-node&#10;    networks:&#10;      - elk&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD-SHELL&quot;, &quot;curl -s -k http://localhost:9200&quot;]&#10;      interval: 10s&#10;      timeout: 10s&#10;      retries: 5&#10;&#10;  logstash:&#10;    build:&#10;      context: logstash/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: logstash&#10;    volumes:&#10;      - ./docker/logstash/config:/usr/share/logstash/config:ro&#10;      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline:ro&#10;    ports:&#10;      - 5044:5044&#10;      - 50000:50000/tcp&#10;      - 50000:50000/udp&#10;    environment:&#10;      LS_JAVA_OPTS: -Xms512m -Xmx512m&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;    deploy:&#10;      resources:&#10;        limits:&#10;          cpus: '1'&#10;          memory: 1G&#10;&#10;  kibana:&#10;    build:&#10;      context: kibana/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: kibana&#10;    volumes:&#10;      - ./kibana/config:/usr/share/kibana/config:ro&#10;    ports:&#10;      - 5601:5601&#10;    environment:&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;&#10;  setup:&#10;    profiles:&#10;      - setup&#10;    build:&#10;      context: setup/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    init: true&#10;    volumes:&#10;      - ./setup/entrypoint.sh:/entrypoint.sh:ro&#10;      - ./setup/lib.sh:/lib.sh:ro&#10;      - ./setup/roles:/roles:ro&#10;    environment:&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;&#10;networks:&#10;  elk:&#10;    driver: bridge&#10;&#10;volumes:&#10;  redis_data:&#10;  mysql_data:&#10;  elasticsearch_config:&#10;  elasticsearch_data:&#10;```&#10;&#10;Key changes made:&#10;1. Replaced hardcoded passwords with environment variables&#10;2. Added health checks for critical services&#10;3. Added restart policies&#10;4. Improved volume management with named volumes&#10;5. Added resource limits for Java services&#10;6. Removed unnecessary container name suffixes&#10;7. Improved service dependencies with health conditions&#10;8. Grouped related services together&#10;9. Added read-only mounts where appropriate&#10;10. Simplified port mappings where possible&#10;&#10;Remember to:&#10;1. Create a `.env` file for all the environment variables&#10;2. Adjust memory settings based on your host machine's resources&#10;3. Consider adding logging configurations for production use&#10;4. Review security settings before deploying to production&#10;" />
+                      <option name="nodes">
+                        <list>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="I'll analyze the docker-compose.yaml file and suggest several optimizations:" />
+                            <option name="contentId" value="-849050516" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="" />
+                            <option name="contentId" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="1. **Security Improvements**:" />
+                            <option name="contentId" value="306870208" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Remove hardcoded passwords (like `bk123$%^`) and use environment variables or Docker secrets" />
+                            <option name="contentId" value="-2076164276" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Add restart policies for critical services" />
+                            <option name="contentId" value="1983520296" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Consider adding health checks for services" />
+                            <option name="contentId" value="-1766155490" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="" />
+                            <option name="contentId" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="2. **Resource Management**:" />
+                            <option name="contentId" value="-1779716631" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Add resource limits (CPU/memory) to prevent any single service from consuming too many resources" />
+                            <option name="contentId" value="2084256825" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Adjust Java heap sizes based on your available system resources" />
+                            <option name="contentId" value="-1257572327" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="" />
+                            <option name="contentId" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="3. **Structure Improvements**:" />
+                            <option name="contentId" value="1718535435" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Group related services together (ELK stack together, database services together)" />
+                            <option name="contentId" value="-516628766" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Use consistent naming conventions (either all with _202505 suffix or none)" />
+                            <option name="contentId" value="1416150273" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Consider using YAML anchors for repeated configurations" />
+                            <option name="contentId" value="2116443316" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="" />
+                            <option name="contentId" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="4. **Performance Optimizations**:" />
+                            <option name="contentId" value="-2047098262" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Add proper volume drivers if needed" />
+                            <option name="contentId" value="-9176306" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Consider adding read-only mounts where appropriate" />
+                            <option name="contentId" value="-1429475649" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value=" Optimize port mappings (remove unnecessary exposed ports)" />
+                            <option name="contentId" value="-927158796" />
+                            <option name="indentSize" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="startSymbol" value="-" />
+                            <option name="type" value="list-item" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="" />
+                            <option name="contentId" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="Here's an optimized version with these improvements:" />
+                            <option name="contentId" value="-1717181354" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="" />
+                            <option name="contentId" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="version: '3.8'&#10;&#10;services:&#10;  # Database Services&#10;  redis:&#10;    image: redis:7.0&#10;    container_name: redis&#10;    ports:&#10;      - &quot;6379:6379&quot;&#10;    volumes:&#10;      - redis_data:/data&#10;    command: redis-server --appendonly yes&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD&quot;, &quot;redis-cli&quot;, &quot;ping&quot;]&#10;      interval: 5s&#10;      timeout: 3s&#10;      retries: 3&#10;&#10;  mysql:&#10;    image: mysql:8.0.29&#10;    container_name: mysql&#10;    ports:&#10;      - &quot;3306:3306&quot;&#10;    environment:&#10;      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}&#10;      MYSQL_DATABASE: ${MYSQL_DATABASE}&#10;      MYSQL_USER: ${MYSQL_USER}&#10;      MYSQL_PASSWORD: ${MYSQL_PASSWORD}&#10;    volumes:&#10;      - mysql_data:/var/lib/mysql&#10;      - ./docker/mysql/mysql-init:/docker-entrypoint-initdb.d:ro&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD&quot;, &quot;mysqladmin&quot;, &quot;ping&quot;, &quot;-h&quot;, &quot;localhost&quot;]&#10;      timeout: 20s&#10;      retries: 10&#10;&#10;  phpmyadmin:&#10;    image: phpmyadmin&#10;    container_name: phpmyadmin&#10;    ports:&#10;      - &quot;8080:80&quot;&#10;    environment:&#10;      PMA_HOST: mysql&#10;      PMA_USER: root&#10;      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}&#10;    depends_on:&#10;      mysql:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;&#10;  # ELK Stack Services&#10;  elasticsearch:&#10;    build:&#10;      context: elasticsearch/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: elasticsearch&#10;    volumes:&#10;      - elasticsearch_config:/usr/share/elasticsearch/config:ro&#10;      - elasticsearch_data:/usr/share/elasticsearch/data&#10;    ports:&#10;      - 9200:9200&#10;      - 9300:9300&#10;    environment:&#10;      node.name: elasticsearch&#10;      ES_JAVA_OPTS: -Xms1g -Xmx1g&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}&#10;      discovery.type: single-node&#10;    networks:&#10;      - elk&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD-SHELL&quot;, &quot;curl -s -k http://localhost:9200&quot;]&#10;      interval: 10s&#10;      timeout: 10s&#10;      retries: 5&#10;&#10;  logstash:&#10;    build:&#10;      context: logstash/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: logstash&#10;    volumes:&#10;      - ./docker/logstash/config:/usr/share/logstash/config:ro&#10;      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline:ro&#10;    ports:&#10;      - 5044:5044&#10;      - 50000:50000/tcp&#10;      - 50000:50000/udp&#10;    environment:&#10;      LS_JAVA_OPTS: -Xms512m -Xmx512m&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;    deploy:&#10;      resources:&#10;        limits:&#10;          cpus: '1'&#10;          memory: 1G&#10;&#10;  kibana:&#10;    build:&#10;      context: kibana/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: kibana&#10;    volumes:&#10;      - ./kibana/config:/usr/share/kibana/config:ro&#10;    ports:&#10;      - 5601:5601&#10;    environment:&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;&#10;  setup:&#10;    profiles:&#10;      - setup&#10;    build:&#10;      context: setup/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    init: true&#10;    volumes:&#10;      - ./setup/entrypoint.sh:/entrypoint.sh:ro&#10;      - ./setup/lib.sh:/lib.sh:ro&#10;      - ./setup/roles:/roles:ro&#10;    environment:&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;&#10;networks:&#10;  elk:&#10;    driver: bridge&#10;&#10;volumes:&#10;  redis_data:&#10;  mysql_data:&#10;  elasticsearch_config:&#10;  elasticsearch_data:&#10;" />
+                            <option name="contentId" value="1809998520" />
+                            <option name="expectEnding" value="```" />
+                            <option name="indentSize" value="0" />
+                            <option name="language" value="yaml" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="code-block" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="" />
+                            <option name="contentId" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="Key changes made:" />
+                            <option name="contentId" value="-1218398713" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="1. Replaced hardcoded passwords with environment variables" />
+                            <option name="contentId" value="-1650968039" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="2. Added health checks for critical services" />
+                            <option name="contentId" value="1370943827" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="3. Added restart policies" />
+                            <option name="contentId" value="2022861542" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="4. Improved volume management with named volumes" />
+                            <option name="contentId" value="-1864416835" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="5. Added resource limits for Java services" />
+                            <option name="contentId" value="1287355752" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="6. Removed unnecessary container name suffixes" />
+                            <option name="contentId" value="1333119427" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="7. Improved service dependencies with health conditions" />
+                            <option name="contentId" value="-420405597" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="8. Grouped related services together" />
+                            <option name="contentId" value="-1589813765" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="9. Added read-only mounts where appropriate" />
+                            <option name="contentId" value="-62926030" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="10. Simplified port mappings where possible" />
+                            <option name="contentId" value="-561169283" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="" />
+                            <option name="contentId" value="0" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="Remember to:" />
+                            <option name="contentId" value="-451315412" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="1. Create a `.env` file for all the environment variables" />
+                            <option name="contentId" value="-7841600" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="2. Adjust memory settings based on your host machine's resources" />
+                            <option name="contentId" value="-1653726908" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="3. Consider adding logging configurations for production use" />
+                            <option name="contentId" value="2133472316" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="4. Review security settings before deploying to production" />
+                            <option name="contentId" value="1367429847" />
+                            <option name="settled" value="true" />
+                            <option name="type" value="line" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                          <MarkdownNode>
+                            <option name="children">
+                              <list />
+                            </option>
+                            <option name="content" value="" />
+                            <option name="contentId" value="0" />
+                            <option name="settled" value="false" />
+                            <option name="type" value="undetermined" />
+                            <option name="xmlData">
+                              <XmlNode />
+                            </option>
+                          </MarkdownNode>
+                        </list>
+                      </option>
+                      <option name="parserState">
+                        <ParserState>
+                          <option name="line" value="200" />
+                          <option name="column" value="-1" />
+                          <option name="offset" value="5366" />
+                          <option name="moveCursor" value="true" />
+                        </ParserState>
+                      </option>
+                    </SimpleMarkdownStreamParser>
+                  </option>
+                  <option name="references">
+                    <list />
+                  </option>
+                  <option name="role" value="assistant" />
+                  <option name="topic" value="" />
+                </UIChatMessage>
+              </list>
+            </option>
+            <option name="messagesV3">
+              <list>
+                <ChatMessageV3>
+                  <option name="role" value="user" />
+                  <option name="content" value="对以下代码进行优化：" />
+                  <option name="extra">
+                    <ChatMessageExtra>
+                      <option name="agent" value="default" />
+                      <option name="cmd" value="default" />
+                      <option name="code" value="evihrlm: '6.1'&#10;&#10;hvierxvh:&#10;  # Ivwrh Hvierxv&#10;  ivwrh:&#10;    rnztv: ivwrh:2.9&#10;    xlmgzrmvi_mznv: ivwrh_797494&#10;    kligh:&#10;      - &quot;3620:3620&quot;&#10;    elofnvh:&#10;      - ./wlxpvi/ivwrh/ivwrh-wzgz:/wzgz&#10;    xlnnzmw: ivwrh-hvievi --zkkvmwlmob bvh&#10;&#10;  # NbHJO Hvierxv&#10;  nbhjo:&#10;    rnztv: nbhjo:1.9.70&#10;    xlmgzrmvi_mznv: nbhjo_797494&#10;    kligh:&#10;      - &quot;6693:6693&quot;&#10;    vmerilmnvmg:&#10;      NBHJO_ILLG_KZHHDLIW: yp876$%^&#10;      NBHJO_WZGZYZHV: tliwlm_wy&#10;      NBHJO_FHVI: tliwlm&#10;      NBHJO_KZHHDLIW: yp876$%^&#10;    elofnvh:&#10;      - ./wlxpvi/nbhjo/nbhjo-wzgz:/ezi/ory/nbhjo&#10;      - ./wlxpvi/nbhjo/nbhjo-rmrg:/wlxpvi-vmgibklrmg-rmrgwy.w&#10;&#10;  # KSKNbZwnrm Hvierxv&#10;  ksknbzwnrm:&#10;    rnztv: ksknbzwnrm&#10;    xlmgzrmvi_mznv: ksknbzwnrm_797494&#10;    kligh:&#10;      - &quot;1919:19&quot;&#10;    vmerilmnvmg:&#10;      KNZ_SLHG: nbhjo_797494&#10;      KNZ_FHVI: illg&#10;      KNZ_KZHHDLIW: yp876$%^&#10;    wvkvmwh_lm:&#10;      - nbhjo&#10;&#10;  hvgfk:&#10;    kilurovh:&#10;      - hvgfk&#10;    yfrow:&#10;      xlmgvcg: hvgfk/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    rmrg: gifv&#10;    elofnvh:&#10;      - ./hvgfk/vmgibklrmg.hs:/vmgibklrmg.hs:il,A&#10;      - ./hvgfk/ory.hs:/ory.hs:il,A&#10;      - ./hvgfk/ilovh:/ilovh:il,A&#10;    vmerilmnvmg:&#10;      VOZHGRX_KZHHDLIW: ${VOZHGRX_KZHHDLIW:-}&#10;      OLTHGZHS_RMGVIMZO_KZHHDLIW: ${OLTHGZHS_RMGVIMZO_KZHHDLIW:-}&#10;      PRYZMZ_HBHGVN_KZHHDLIW: ${PRYZMZ_HBHGVN_KZHHDLIW:-}&#10;      NVGIRXYVZG_RMGVIMZO_KZHHDLIW: ${NVGIRXYVZG_RMGVIMZO_KZHHDLIW:-}&#10;      UROVYVZG_RMGVIMZO_KZHHDLIW: ${UROVYVZG_RMGVIMZO_KZHHDLIW:-}&#10;      SVZIGYVZG_RMGVIMZO_KZHHDLIW: ${SVZIGYVZG_RMGVIMZO_KZHHDLIW:-}&#10;      NLMRGLIRMT_RMGVIMZO_KZHHDLIW: ${NLMRGLIRMT_RMGVIMZO_KZHHDLIW:-}&#10;      YVZGH_HBHGVN_KZHHDLIW: ${YVZGH_HBHGVN_KZHHDLIW:-}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      - vozhgrxhvzixs&#10;&#10;  #  Vozhgrxhvzixs Hvierxv&#10;  vozhgrxhvzixs:&#10;    yfrow:&#10;      xlmgvcg: vozhgrxhvzixs/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: vozhgrxhvzixs_797494&#10;    elofnvh:&#10;      - ./wlxpvi/vozhgrxhvzixs/xlmurt/vozhgrxhvzixs.bno:/fhi/hsziv/vozhgrxhvzixs/xlmurt/vozhgrxhvzixs.bno:il,A&#10;      - ./wlxpvi/vozhgrxhvzixs:/fhi/hsziv/vozhgrxhvzixs/wzgz:A&#10;    kligh:&#10;      - 0799:0799&#10;      - 0699:0699&#10;    vmerilmnvmg:&#10;      mlwv.mznv: vozhgrxhvzixs&#10;      VH_QZEZ_LKGH: -Cnh487n -Cnc487n&#10;      # Yllghgizk kzhhdliw.&#10;      # Fhvw gl rmrgrzorav gsv pvbhgliv wfirmt gsv rmrgrzo hgzigfk lu&#10;      # Vozhgrxhvzixs. Rtmlivw lm hfyhvjfvmg ifmh.&#10;      VOZHGRX_KZHHDLIW: ${VOZHGRX_KZHHDLIW:-}&#10;      # Fhv hrmtov mlwv wrhxlevib rm liwvi gl wrhzyov kilwfxgrlm nlwv zmw zelrw yllghgizk xsvxph.&#10;      # hvv: sggkh://ddd.vozhgrx.xl/wlxh/wvkolb-nzmztv/wvkolb/hvou-nzmztvw/yllghgizk-xsvxph&#10;      wrhxlevib.gbkv: hrmtov-mlwv&#10;    mvgdliph:&#10;      - vop&#10;&#10;  # Olthgzhs Hvierxv&#10;  olthgzhs:&#10;    yfrow:&#10;      xlmgvcg: olthgzhs/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: olthgzhs_797494&#10;    elofnvh:&#10;      - ./wlxpvi/olthgzhs/xlmurt/olthgzhs.bno:/fhi/hsziv/olthgzhs/xlmurt/olthgzhs.bno:il,A&#10;      - ./wlxpvi/olthgzhs/krkvormv:/fhi/hsziv/olthgzhs/krkvormv:il,A&#10;    kligh:&#10;      - 4955:4955&#10;      - 49999:49999/gxk&#10;      - 49999:49999/fwk&#10;      - 0399:0399&#10;    vmerilmnvmg:&#10;      OH_QZEZ_LKGH: -Cnh743n -Cnc743n&#10;      OLTHGZHS_RMGVIMZO_KZHHDLIW: ${OLTHGZHS_RMGVIMZO_KZHHDLIW:-}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      - vozhgrxhvzixs&#10;&#10;  # Pryzmz Hvierxv&#10;  pryzmz:&#10;    yfrow:&#10;      xlmgvcg: pryzmz/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: pryzmz_797494&#10;    elofnvh:&#10;      - ./pryzmz/xlmurt/pryzmz.bno:/fhi/hsziv/pryzmz/xlmurt/pryzmz.bno:il,A&#10;    kligh:&#10;      - 4398:4398&#10;    vmerilmnvmg:&#10;      PRYZMZ_HBHGVN_KZHHDLIW: ${PRYZMZ_HBHGVN_KZHHDLIW:-}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      - vozhgrxhvzixs&#10;&#10;mvgdliph:&#10;  vop:&#10;    wirevi: yirwtv&#10;&#10;elofnvh:&#10;  vozhgrxhvzixs:&#10;" />
+                      <option name="path" value="$PROJECT_DIR$/docker-compose.yaml" />
+                    </ChatMessageExtra>
+                  </option>
+                </ChatMessageV3>
+                <ChatMessageV3>
+                  <option name="role" value="assistant" />
+                  <option name="content" value="I'll analyze the docker-compose.yaml file and suggest several optimizations:&#10;&#10;1. **Security Improvements**:&#10;- Remove hardcoded passwords (like `bk123$%^`) and use environment variables or Docker secrets&#10;- Add restart policies for critical services&#10;- Consider adding health checks for services&#10;&#10;2. **Resource Management**:&#10;- Add resource limits (CPU/memory) to prevent any single service from consuming too many resources&#10;- Adjust Java heap sizes based on your available system resources&#10;&#10;3. **Structure Improvements**:&#10;- Group related services together (ELK stack together, database services together)&#10;- Use consistent naming conventions (either all with _202505 suffix or none)&#10;- Consider using YAML anchors for repeated configurations&#10;&#10;4. **Performance Optimizations**:&#10;- Add proper volume drivers if needed&#10;- Consider adding read-only mounts where appropriate&#10;- Optimize port mappings (remove unnecessary exposed ports)&#10;&#10;Here's an optimized version with these improvements:&#10;&#10;```yaml&#10;version: '3.8'&#10;&#10;services:&#10;  # Database Services&#10;  redis:&#10;    image: redis:7.0&#10;    container_name: redis&#10;    ports:&#10;      - &quot;6379:6379&quot;&#10;    volumes:&#10;      - redis_data:/data&#10;    command: redis-server --appendonly yes&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD&quot;, &quot;redis-cli&quot;, &quot;ping&quot;]&#10;      interval: 5s&#10;      timeout: 3s&#10;      retries: 3&#10;&#10;  mysql:&#10;    image: mysql:8.0.29&#10;    container_name: mysql&#10;    ports:&#10;      - &quot;3306:3306&quot;&#10;    environment:&#10;      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}&#10;      MYSQL_DATABASE: ${MYSQL_DATABASE}&#10;      MYSQL_USER: ${MYSQL_USER}&#10;      MYSQL_PASSWORD: ${MYSQL_PASSWORD}&#10;    volumes:&#10;      - mysql_data:/var/lib/mysql&#10;      - ./docker/mysql/mysql-init:/docker-entrypoint-initdb.d:ro&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD&quot;, &quot;mysqladmin&quot;, &quot;ping&quot;, &quot;-h&quot;, &quot;localhost&quot;]&#10;      timeout: 20s&#10;      retries: 10&#10;&#10;  phpmyadmin:&#10;    image: phpmyadmin&#10;    container_name: phpmyadmin&#10;    ports:&#10;      - &quot;8080:80&quot;&#10;    environment:&#10;      PMA_HOST: mysql&#10;      PMA_USER: root&#10;      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}&#10;    depends_on:&#10;      mysql:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;&#10;  # ELK Stack Services&#10;  elasticsearch:&#10;    build:&#10;      context: elasticsearch/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: elasticsearch&#10;    volumes:&#10;      - elasticsearch_config:/usr/share/elasticsearch/config:ro&#10;      - elasticsearch_data:/usr/share/elasticsearch/data&#10;    ports:&#10;      - 9200:9200&#10;      - 9300:9300&#10;    environment:&#10;      node.name: elasticsearch&#10;      ES_JAVA_OPTS: -Xms1g -Xmx1g&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}&#10;      discovery.type: single-node&#10;    networks:&#10;      - elk&#10;    restart: unless-stopped&#10;    healthcheck:&#10;      test: [&quot;CMD-SHELL&quot;, &quot;curl -s -k http://localhost:9200&quot;]&#10;      interval: 10s&#10;      timeout: 10s&#10;      retries: 5&#10;&#10;  logstash:&#10;    build:&#10;      context: logstash/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: logstash&#10;    volumes:&#10;      - ./docker/logstash/config:/usr/share/logstash/config:ro&#10;      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline:ro&#10;    ports:&#10;      - 5044:5044&#10;      - 50000:50000/tcp&#10;      - 50000:50000/udp&#10;    environment:&#10;      LS_JAVA_OPTS: -Xms512m -Xmx512m&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;    deploy:&#10;      resources:&#10;        limits:&#10;          cpus: '1'&#10;          memory: 1G&#10;&#10;  kibana:&#10;    build:&#10;      context: kibana/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: kibana&#10;    volumes:&#10;      - ./kibana/config:/usr/share/kibana/config:ro&#10;    ports:&#10;      - 5601:5601&#10;    environment:&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;    restart: unless-stopped&#10;&#10;  setup:&#10;    profiles:&#10;      - setup&#10;    build:&#10;      context: setup/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    init: true&#10;    volumes:&#10;      - ./setup/entrypoint.sh:/entrypoint.sh:ro&#10;      - ./setup/lib.sh:/lib.sh:ro&#10;      - ./setup/roles:/roles:ro&#10;    environment:&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      elasticsearch:&#10;        condition: service_healthy&#10;&#10;networks:&#10;  elk:&#10;    driver: bridge&#10;&#10;volumes:&#10;  redis_data:&#10;  mysql_data:&#10;  elasticsearch_config:&#10;  elasticsearch_data:&#10;```&#10;&#10;Key changes made:&#10;1. Replaced hardcoded passwords with environment variables&#10;2. Added health checks for critical services&#10;3. Added restart policies&#10;4. Improved volume management with named volumes&#10;5. Added resource limits for Java services&#10;6. Removed unnecessary container name suffixes&#10;7. Improved service dependencies with health conditions&#10;8. Grouped related services together&#10;9. Added read-only mounts where appropriate&#10;10. Simplified port mappings where possible&#10;&#10;Remember to:&#10;1. Create a `.env` file for all the environment variables&#10;2. Adjust memory settings based on your host machine's resources&#10;3. Consider adding logging configurations for production use&#10;4. Review security settings before deploying to production" />
+                  <option name="extra">
+                    <ChatMessageExtra />
+                  </option>
+                </ChatMessageV3>
+              </list>
+            </option>
+            <option name="sessionId" value="019717314266722aa1fd76d5c8608f92" />
+            <option name="source" value="codeAction" />
+          </ChatSession>
+        </option>
+        <option name="conversationId" value="019717314266722aa1fd76d5c8608f92" />
+        <option name="conversation">
+          <Conversation>
+            <option name="createTime" value="1748440793088" />
+            <option name="id" value="019717314266722aa1fd76d5c8608f92" />
+            <option name="title" value="对以下代码进行优化：" />
+            <option name="turns">
+              <list>
+                <Turn>
+                  <option name="agent" value="" />
+                  <option name="answer" value="R'oo zmzobav gsv wlxpvi-xlnklhv.bzno urov zmw hfttvhg hvevizo lkgrnrazgrlmh:&#10;&#10;8. **Hvxfirgb Rnkilevnvmgh**:&#10;- Ivnlev sziwxlwvw kzhhdliwh (orpv `yp876$%^`) zmw fhv vmerilmnvmg ezirzyovh li Wlxpvi hvxivgh&#10;- Zww ivhgzig klorxrvh uli xirgrxzo hvierxvh&#10;- Xlmhrwvi zwwrmt svzogs xsvxph uli hvierxvh&#10;&#10;7. **Ivhlfixv Nzmztvnvmg**:&#10;- Zww ivhlfixv ornrgh (XKF/nvnlib) gl kivevmg zmb hrmtov hvierxv uiln xlmhfnrmt gll nzmb ivhlfixvh&#10;- Zwqfhg Qzez svzk hravh yzhvw lm blfi zezrozyov hbhgvn ivhlfixvh&#10;&#10;6. **Hgifxgfiv Rnkilevnvmgh**:&#10;- Tilfk ivozgvw hvierxvh gltvgsvi (VOP hgzxp gltvgsvi, wzgzyzhv hvierxvh gltvgsvi)&#10;- Fhv xlmhrhgvmg mznrmt xlmevmgrlmh (vrgsvi zoo drgs _797494 hfuurc li mlmv)&#10;- Xlmhrwvi fhrmt BZNO zmxslih uli ivkvzgvw xlmurtfizgrlmh&#10;&#10;5. **Kviulinzmxv Lkgrnrazgrlmh**:&#10;- Zww kilkvi elofnv wirevih ru mvvwvw&#10;- Xlmhrwvi zwwrmt ivzw-lmob nlfmgh dsviv zkkilkirzgv&#10;- Lkgrnrav klig nzkkrmth (ivnlev fmmvxvhhzib vcklhvw kligh)&#10;&#10;Sviv'h zm lkgrnravw evihrlm drgs gsvhv rnkilevnvmgh:&#10;&#10;```bzno&#10;evihrlm: '6.1'&#10;&#10;hvierxvh:&#10;  # Wzgzyzhv Hvierxvh&#10;  ivwrh:&#10;    rnztv: ivwrh:2.9&#10;    xlmgzrmvi_mznv: ivwrh&#10;    kligh:&#10;      - &quot;3620:3620&quot;&#10;    elofnvh:&#10;      - ivwrh_wzgz:/wzgz&#10;    xlnnzmw: ivwrh-hvievi --zkkvmwlmob bvh&#10;    ivhgzig: fmovhh-hglkkvw&#10;    svzogsxsvxp:&#10;      gvhg: [&quot;XNW&quot;, &quot;ivwrh-xor&quot;, &quot;krmt&quot;]&#10;      rmgviezo: 4h&#10;      grnvlfg: 6h&#10;      ivgirvh: 6&#10;&#10;  nbhjo:&#10;    rnztv: nbhjo:1.9.70&#10;    xlmgzrmvi_mznv: nbhjo&#10;    kligh:&#10;      - &quot;6693:6693&quot;&#10;    vmerilmnvmg:&#10;      NBHJO_ILLG_KZHHDLIW: ${NBHJO_ILLG_KZHHDLIW}&#10;      NBHJO_WZGZYZHV: ${NBHJO_WZGZYZHV}&#10;      NBHJO_FHVI: ${NBHJO_FHVI}&#10;      NBHJO_KZHHDLIW: ${NBHJO_KZHHDLIW}&#10;    elofnvh:&#10;      - nbhjo_wzgz:/ezi/ory/nbhjo&#10;      - ./wlxpvi/nbhjo/nbhjo-rmrg:/wlxpvi-vmgibklrmg-rmrgwy.w:il&#10;    ivhgzig: fmovhh-hglkkvw&#10;    svzogsxsvxp:&#10;      gvhg: [&quot;XNW&quot;, &quot;nbhjozwnrm&quot;, &quot;krmt&quot;, &quot;-s&quot;, &quot;olxzoslhg&quot;]&#10;      grnvlfg: 79h&#10;      ivgirvh: 89&#10;&#10;  ksknbzwnrm:&#10;    rnztv: ksknbzwnrm&#10;    xlmgzrmvi_mznv: ksknbzwnrm&#10;    kligh:&#10;      - &quot;1919:19&quot;&#10;    vmerilmnvmg:&#10;      KNZ_SLHG: nbhjo&#10;      KNZ_FHVI: illg&#10;      KNZ_KZHHDLIW: ${NBHJO_ILLG_KZHHDLIW}&#10;    wvkvmwh_lm:&#10;      nbhjo:&#10;        xlmwrgrlm: hvierxv_svzogsb&#10;    ivhgzig: fmovhh-hglkkvw&#10;&#10;  # VOP Hgzxp Hvierxvh&#10;  vozhgrxhvzixs:&#10;    yfrow:&#10;      xlmgvcg: vozhgrxhvzixs/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: vozhgrxhvzixs&#10;    elofnvh:&#10;      - vozhgrxhvzixs_xlmurt:/fhi/hsziv/vozhgrxhvzixs/xlmurt:il&#10;      - vozhgrxhvzixs_wzgz:/fhi/hsziv/vozhgrxhvzixs/wzgz&#10;    kligh:&#10;      - 0799:0799&#10;      - 0699:0699&#10;    vmerilmnvmg:&#10;      mlwv.mznv: vozhgrxhvzixs&#10;      VH_QZEZ_LKGH: -Cnh8t -Cnc8t&#10;      VOZHGRX_KZHHDLIW: ${VOZHGRX_KZHHDLIW}&#10;      wrhxlevib.gbkv: hrmtov-mlwv&#10;    mvgdliph:&#10;      - vop&#10;    ivhgzig: fmovhh-hglkkvw&#10;    svzogsxsvxp:&#10;      gvhg: [&quot;XNW-HSVOO&quot;, &quot;xfio -h -p sggk://olxzoslhg:0799&quot;]&#10;      rmgviezo: 89h&#10;      grnvlfg: 89h&#10;      ivgirvh: 4&#10;&#10;  olthgzhs:&#10;    yfrow:&#10;      xlmgvcg: olthgzhs/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: olthgzhs&#10;    elofnvh:&#10;      - ./wlxpvi/olthgzhs/xlmurt:/fhi/hsziv/olthgzhs/xlmurt:il&#10;      - ./wlxpvi/olthgzhs/krkvormv:/fhi/hsziv/olthgzhs/krkvormv:il&#10;    kligh:&#10;      - 4955:4955&#10;      - 49999:49999/gxk&#10;      - 49999:49999/fwk&#10;    vmerilmnvmg:&#10;      OH_QZEZ_LKGH: -Cnh487n -Cnc487n&#10;      OLTHGZHS_RMGVIMZO_KZHHDLIW: ${OLTHGZHS_RMGVIMZO_KZHHDLIW}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      vozhgrxhvzixs:&#10;        xlmwrgrlm: hvierxv_svzogsb&#10;    ivhgzig: fmovhh-hglkkvw&#10;    wvkolb:&#10;      ivhlfixvh:&#10;        ornrgh:&#10;          xkfh: '8'&#10;          nvnlib: 8T&#10;&#10;  pryzmz:&#10;    yfrow:&#10;      xlmgvcg: pryzmz/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: pryzmz&#10;    elofnvh:&#10;      - ./pryzmz/xlmurt:/fhi/hsziv/pryzmz/xlmurt:il&#10;    kligh:&#10;      - 4398:4398&#10;    vmerilmnvmg:&#10;      PRYZMZ_HBHGVN_KZHHDLIW: ${PRYZMZ_HBHGVN_KZHHDLIW}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      vozhgrxhvzixs:&#10;        xlmwrgrlm: hvierxv_svzogsb&#10;    ivhgzig: fmovhh-hglkkvw&#10;&#10;  hvgfk:&#10;    kilurovh:&#10;      - hvgfk&#10;    yfrow:&#10;      xlmgvcg: hvgfk/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    rmrg: gifv&#10;    elofnvh:&#10;      - ./hvgfk/vmgibklrmg.hs:/vmgibklrmg.hs:il&#10;      - ./hvgfk/ory.hs:/ory.hs:il&#10;      - ./hvgfk/ilovh:/ilovh:il&#10;    vmerilmnvmg:&#10;      VOZHGRX_KZHHDLIW: ${VOZHGRX_KZHHDLIW}&#10;      OLTHGZHS_RMGVIMZO_KZHHDLIW: ${OLTHGZHS_RMGVIMZO_KZHHDLIW}&#10;      PRYZMZ_HBHGVN_KZHHDLIW: ${PRYZMZ_HBHGVN_KZHHDLIW}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      vozhgrxhvzixs:&#10;        xlmwrgrlm: hvierxv_svzogsb&#10;&#10;mvgdliph:&#10;  vop:&#10;    wirevi: yirwtv&#10;&#10;elofnvh:&#10;  ivwrh_wzgz:&#10;  nbhjo_wzgz:&#10;  vozhgrxhvzixs_xlmurt:&#10;  vozhgrxhvzixs_wzgz:&#10;```&#10;&#10;Pvb xszmtvh nzwv:&#10;8. Ivkozxvw sziwxlwvw kzhhdliwh drgs vmerilmnvmg ezirzyovh&#10;7. Zwwvw svzogs xsvxph uli xirgrxzo hvierxvh&#10;6. Zwwvw ivhgzig klorxrvh&#10;5. Rnkilevw elofnv nzmztvnvmg drgs mznvw elofnvh&#10;4. Zwwvw ivhlfixv ornrgh uli Qzez hvierxvh&#10;3. Ivnlevw fmmvxvhhzib xlmgzrmvi mznv hfuurcvh&#10;2. Rnkilevw hvierxv wvkvmwvmxrvh drgs svzogs xlmwrgrlmh&#10;1. Tilfkvw ivozgvw hvierxvh gltvgsvi&#10;0. Zwwvw ivzw-lmob nlfmgh dsviv zkkilkirzgv&#10;89. Hrnkorurvw klig nzkkrmth dsviv klhhryov&#10;&#10;Ivnvnyvi gl:&#10;8. Xivzgv z `.vme` urov uli zoo gsv vmerilmnvmg ezirzyovh&#10;7. Zwqfhg nvnlib hvggrmth yzhvw lm blfi slhg nzxsrmv'h ivhlfixvh&#10;6. Xlmhrwvi zwwrmt olttrmt xlmurtfizgrlmh uli kilwfxgrlm fhv&#10;5. Ivervd hvxfirgb hvggrmth yvuliv wvkolbrmt gl kilwfxgrlm" />
+                  <option name="chatResource" value="user" />
+                  <option name="codeReferences">
+                    <list>
+                      <CodeReferencesBean>
+                        <option name="content" value="evihrlm: '6.1'&#10;&#10;hvierxvh:&#10;  # Ivwrh Hvierxv&#10;  ivwrh:&#10;    rnztv: ivwrh:2.9&#10;    xlmgzrmvi_mznv: ivwrh_797494&#10;    kligh:&#10;      - &quot;3620:3620&quot;&#10;    elofnvh:&#10;      - ./wlxpvi/ivwrh/ivwrh-wzgz:/wzgz&#10;    xlnnzmw: ivwrh-hvievi --zkkvmwlmob bvh&#10;&#10;  # NbHJO Hvierxv&#10;  nbhjo:&#10;    rnztv: nbhjo:1.9.70&#10;    xlmgzrmvi_mznv: nbhjo_797494&#10;    kligh:&#10;      - &quot;6693:6693&quot;&#10;    vmerilmnvmg:&#10;      NBHJO_ILLG_KZHHDLIW: yp876$%^&#10;      NBHJO_WZGZYZHV: tliwlm_wy&#10;      NBHJO_FHVI: tliwlm&#10;      NBHJO_KZHHDLIW: yp876$%^&#10;    elofnvh:&#10;      - ./wlxpvi/nbhjo/nbhjo-wzgz:/ezi/ory/nbhjo&#10;      - ./wlxpvi/nbhjo/nbhjo-rmrg:/wlxpvi-vmgibklrmg-rmrgwy.w&#10;&#10;  # KSKNbZwnrm Hvierxv&#10;  ksknbzwnrm:&#10;    rnztv: ksknbzwnrm&#10;    xlmgzrmvi_mznv: ksknbzwnrm_797494&#10;    kligh:&#10;      - &quot;1919:19&quot;&#10;    vmerilmnvmg:&#10;      KNZ_SLHG: nbhjo_797494&#10;      KNZ_FHVI: illg&#10;      KNZ_KZHHDLIW: yp876$%^&#10;    wvkvmwh_lm:&#10;      - nbhjo&#10;&#10;  hvgfk:&#10;    kilurovh:&#10;      - hvgfk&#10;    yfrow:&#10;      xlmgvcg: hvgfk/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    rmrg: gifv&#10;    elofnvh:&#10;      - ./hvgfk/vmgibklrmg.hs:/vmgibklrmg.hs:il,A&#10;      - ./hvgfk/ory.hs:/ory.hs:il,A&#10;      - ./hvgfk/ilovh:/ilovh:il,A&#10;    vmerilmnvmg:&#10;      VOZHGRX_KZHHDLIW: ${VOZHGRX_KZHHDLIW:-}&#10;      OLTHGZHS_RMGVIMZO_KZHHDLIW: ${OLTHGZHS_RMGVIMZO_KZHHDLIW:-}&#10;      PRYZMZ_HBHGVN_KZHHDLIW: ${PRYZMZ_HBHGVN_KZHHDLIW:-}&#10;      NVGIRXYVZG_RMGVIMZO_KZHHDLIW: ${NVGIRXYVZG_RMGVIMZO_KZHHDLIW:-}&#10;      UROVYVZG_RMGVIMZO_KZHHDLIW: ${UROVYVZG_RMGVIMZO_KZHHDLIW:-}&#10;      SVZIGYVZG_RMGVIMZO_KZHHDLIW: ${SVZIGYVZG_RMGVIMZO_KZHHDLIW:-}&#10;      NLMRGLIRMT_RMGVIMZO_KZHHDLIW: ${NLMRGLIRMT_RMGVIMZO_KZHHDLIW:-}&#10;      YVZGH_HBHGVN_KZHHDLIW: ${YVZGH_HBHGVN_KZHHDLIW:-}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      - vozhgrxhvzixs&#10;&#10;  #  Vozhgrxhvzixs Hvierxv&#10;  vozhgrxhvzixs:&#10;    yfrow:&#10;      xlmgvcg: vozhgrxhvzixs/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: vozhgrxhvzixs_797494&#10;    elofnvh:&#10;      - ./wlxpvi/vozhgrxhvzixs/xlmurt/vozhgrxhvzixs.bno:/fhi/hsziv/vozhgrxhvzixs/xlmurt/vozhgrxhvzixs.bno:il,A&#10;      - ./wlxpvi/vozhgrxhvzixs:/fhi/hsziv/vozhgrxhvzixs/wzgz:A&#10;    kligh:&#10;      - 0799:0799&#10;      - 0699:0699&#10;    vmerilmnvmg:&#10;      mlwv.mznv: vozhgrxhvzixs&#10;      VH_QZEZ_LKGH: -Cnh487n -Cnc487n&#10;      # Yllghgizk kzhhdliw.&#10;      # Fhvw gl rmrgrzorav gsv pvbhgliv wfirmt gsv rmrgrzo hgzigfk lu&#10;      # Vozhgrxhvzixs. Rtmlivw lm hfyhvjfvmg ifmh.&#10;      VOZHGRX_KZHHDLIW: ${VOZHGRX_KZHHDLIW:-}&#10;      # Fhv hrmtov mlwv wrhxlevib rm liwvi gl wrhzyov kilwfxgrlm nlwv zmw zelrw yllghgizk xsvxph.&#10;      # hvv: sggkh://ddd.vozhgrx.xl/wlxh/wvkolb-nzmztv/wvkolb/hvou-nzmztvw/yllghgizk-xsvxph&#10;      wrhxlevib.gbkv: hrmtov-mlwv&#10;    mvgdliph:&#10;      - vop&#10;&#10;  # Olthgzhs Hvierxv&#10;  olthgzhs:&#10;    yfrow:&#10;      xlmgvcg: olthgzhs/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: olthgzhs_797494&#10;    elofnvh:&#10;      - ./wlxpvi/olthgzhs/xlmurt/olthgzhs.bno:/fhi/hsziv/olthgzhs/xlmurt/olthgzhs.bno:il,A&#10;      - ./wlxpvi/olthgzhs/krkvormv:/fhi/hsziv/olthgzhs/krkvormv:il,A&#10;    kligh:&#10;      - 4955:4955&#10;      - 49999:49999/gxk&#10;      - 49999:49999/fwk&#10;      - 0399:0399&#10;    vmerilmnvmg:&#10;      OH_QZEZ_LKGH: -Cnh743n -Cnc743n&#10;      OLTHGZHS_RMGVIMZO_KZHHDLIW: ${OLTHGZHS_RMGVIMZO_KZHHDLIW:-}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      - vozhgrxhvzixs&#10;&#10;  # Pryzmz Hvierxv&#10;  pryzmz:&#10;    yfrow:&#10;      xlmgvcg: pryzmz/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: pryzmz_797494&#10;    elofnvh:&#10;      - ./pryzmz/xlmurt/pryzmz.bno:/fhi/hsziv/pryzmz/xlmurt/pryzmz.bno:il,A&#10;    kligh:&#10;      - 4398:4398&#10;    vmerilmnvmg:&#10;      PRYZMZ_HBHGVN_KZHHDLIW: ${PRYZMZ_HBHGVN_KZHHDLIW:-}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      - vozhgrxhvzixs&#10;&#10;mvgdliph:&#10;  vop:&#10;    wirevi: yirwtv&#10;&#10;elofnvh:&#10;  vozhgrxhvzixs:&#10;" />
+                        <option name="end_line" value="139" />
+                        <option name="filename" value="docker-compose.yaml" />
+                        <option name="language" value="yaml" />
+                        <option name="range">
+                          <Range>
+                            <option name="end">
+                              <Position>
+                                <option name="character" value="16" />
+                                <option name="line" value="139" />
+                              </Position>
+                            </option>
+                            <option name="start">
+                              <Position />
+                            </option>
+                          </Range>
+                        </option>
+                        <option name="type" value="editor" />
+                        <option name="url" value="file://$PROJECT_DIR$/docker-compose.yaml" />
+                      </CodeReferencesBean>
+                      <CodeReferencesBean>
+                        <option name="content" value="evihrlm: '6.1'&#10;&#10;hvierxvh:&#10;  # Ivwrh Hvierxv&#10;  ivwrh:&#10;    rnztv: ivwrh:2.9&#10;    xlmgzrmvi_mznv: ivwrh_797494&#10;    kligh:&#10;      - &quot;3620:3620&quot;&#10;    elofnvh:&#10;      - ./wlxpvi/ivwrh/ivwrh-wzgz:/wzgz&#10;    xlnnzmw: ivwrh-hvievi --zkkvmwlmob bvh&#10;&#10;  # NbHJO Hvierxv&#10;  nbhjo:&#10;    rnztv: nbhjo:1.9.70&#10;    xlmgzrmvi_mznv: nbhjo_797494&#10;    kligh:&#10;      - &quot;6693:6693&quot;&#10;    vmerilmnvmg:&#10;      NBHJO_ILLG_KZHHDLIW: yp876$%^&#10;      NBHJO_WZGZYZHV: tliwlm_wy&#10;      NBHJO_FHVI: tliwlm&#10;      NBHJO_KZHHDLIW: yp876$%^&#10;    elofnvh:&#10;      - ./wlxpvi/nbhjo/nbhjo-wzgz:/ezi/ory/nbhjo&#10;      - ./wlxpvi/nbhjo/nbhjo-rmrg:/wlxpvi-vmgibklrmg-rmrgwy.w&#10;&#10;  # KSKNbZwnrm Hvierxv&#10;  ksknbzwnrm:&#10;    rnztv: ksknbzwnrm&#10;    xlmgzrmvi_mznv: ksknbzwnrm_797494&#10;    kligh:&#10;      - &quot;1919:19&quot;&#10;    vmerilmnvmg:&#10;      KNZ_SLHG: nbhjo_797494&#10;      KNZ_FHVI: illg&#10;      KNZ_KZHHDLIW: yp876$%^&#10;    wvkvmwh_lm:&#10;      - nbhjo&#10;&#10;  hvgfk:&#10;    kilurovh:&#10;      - hvgfk&#10;    yfrow:&#10;      xlmgvcg: hvgfk/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    rmrg: gifv&#10;    elofnvh:&#10;      - ./hvgfk/vmgibklrmg.hs:/vmgibklrmg.hs:il,A&#10;      - ./hvgfk/ory.hs:/ory.hs:il,A&#10;      - ./hvgfk/ilovh:/ilovh:il,A&#10;    vmerilmnvmg:&#10;      VOZHGRX_KZHHDLIW: ${VOZHGRX_KZHHDLIW:-}&#10;      OLTHGZHS_RMGVIMZO_KZHHDLIW: ${OLTHGZHS_RMGVIMZO_KZHHDLIW:-}&#10;      PRYZMZ_HBHGVN_KZHHDLIW: ${PRYZMZ_HBHGVN_KZHHDLIW:-}&#10;      NVGIRXYVZG_RMGVIMZO_KZHHDLIW: ${NVGIRXYVZG_RMGVIMZO_KZHHDLIW:-}&#10;      UROVYVZG_RMGVIMZO_KZHHDLIW: ${UROVYVZG_RMGVIMZO_KZHHDLIW:-}&#10;      SVZIGYVZG_RMGVIMZO_KZHHDLIW: ${SVZIGYVZG_RMGVIMZO_KZHHDLIW:-}&#10;      NLMRGLIRMT_RMGVIMZO_KZHHDLIW: ${NLMRGLIRMT_RMGVIMZO_KZHHDLIW:-}&#10;      YVZGH_HBHGVN_KZHHDLIW: ${YVZGH_HBHGVN_KZHHDLIW:-}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      - vozhgrxhvzixs&#10;&#10;  #  Vozhgrxhvzixs Hvierxv&#10;  vozhgrxhvzixs:&#10;    yfrow:&#10;      xlmgvcg: vozhgrxhvzixs/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: vozhgrxhvzixs_797494&#10;    elofnvh:&#10;      - ./wlxpvi/vozhgrxhvzixs/xlmurt/vozhgrxhvzixs.bno:/fhi/hsziv/vozhgrxhvzixs/xlmurt/vozhgrxhvzixs.bno:il,A&#10;      - ./wlxpvi/vozhgrxhvzixs:/fhi/hsziv/vozhgrxhvzixs/wzgz:A&#10;    kligh:&#10;      - 0799:0799&#10;      - 0699:0699&#10;    vmerilmnvmg:&#10;      mlwv.mznv: vozhgrxhvzixs&#10;      VH_QZEZ_LKGH: -Cnh487n -Cnc487n&#10;      # Yllghgizk kzhhdliw.&#10;      # Fhvw gl rmrgrzorav gsv pvbhgliv wfirmt gsv rmrgrzo hgzigfk lu&#10;      # Vozhgrxhvzixs. Rtmlivw lm hfyhvjfvmg ifmh.&#10;      VOZHGRX_KZHHDLIW: ${VOZHGRX_KZHHDLIW:-}&#10;      # Fhv hrmtov mlwv wrhxlevib rm liwvi gl wrhzyov kilwfxgrlm nlwv zmw zelrw yllghgizk xsvxph.&#10;      # hvv: sggkh://ddd.vozhgrx.xl/wlxh/wvkolb-nzmztv/wvkolb/hvou-nzmztvw/yllghgizk-xsvxph&#10;      wrhxlevib.gbkv: hrmtov-mlwv&#10;    mvgdliph:&#10;      - vop&#10;&#10;  # Olthgzhs Hvierxv&#10;  olthgzhs:&#10;    yfrow:&#10;      xlmgvcg: olthgzhs/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: olthgzhs_797494&#10;    elofnvh:&#10;      - ./wlxpvi/olthgzhs/xlmurt/olthgzhs.bno:/fhi/hsziv/olthgzhs/xlmurt/olthgzhs.bno:il,A&#10;      - ./wlxpvi/olthgzhs/krkvormv:/fhi/hsziv/olthgzhs/krkvormv:il,A&#10;    kligh:&#10;      - 4955:4955&#10;      - 49999:49999/gxk&#10;      - 49999:49999/fwk&#10;      - 0399:0399&#10;    vmerilmnvmg:&#10;      OH_QZEZ_LKGH: -Cnh743n -Cnc743n&#10;      OLTHGZHS_RMGVIMZO_KZHHDLIW: ${OLTHGZHS_RMGVIMZO_KZHHDLIW:-}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      - vozhgrxhvzixs&#10;&#10;  # Pryzmz Hvierxv&#10;  pryzmz:&#10;    yfrow:&#10;      xlmgvcg: pryzmz/&#10;      zith:&#10;        VOZHGRX_EVIHRLM: ${VOZHGRX_EVIHRLM}&#10;    xlmgzrmvi_mznv: pryzmz_797494&#10;    elofnvh:&#10;      - ./pryzmz/xlmurt/pryzmz.bno:/fhi/hsziv/pryzmz/xlmurt/pryzmz.bno:il,A&#10;    kligh:&#10;      - 4398:4398&#10;    vmerilmnvmg:&#10;      PRYZMZ_HBHGVN_KZHHDLIW: ${PRYZMZ_HBHGVN_KZHHDLIW:-}&#10;    mvgdliph:&#10;      - vop&#10;    wvkvmwh_lm:&#10;      - vozhgrxhvzixs&#10;&#10;mvgdliph:&#10;  vop:&#10;    wirevi: yirwtv&#10;&#10;elofnvh:&#10;  vozhgrxhvzixs:&#10;" />
+                        <option name="end_line" value="139" />
+                        <option name="filename" value="docker-compose.yaml" />
+                        <option name="language" value="yaml" />
+                        <option name="range">
+                          <Range>
+                            <option name="end">
+                              <Position>
+                                <option name="character" value="16" />
+                                <option name="line" value="139" />
+                              </Position>
+                            </option>
+                            <option name="start">
+                              <Position />
+                            </option>
+                          </Range>
+                        </option>
+                        <option name="type" value="editor" />
+                        <option name="url" value="file://$PROJECT_DIR$/docker-compose.yaml" />
+                      </CodeReferencesBean>
+                    </list>
+                  </option>
+                  <option name="command" value="" />
+                  <option name="conversationId" value="019717314266722aa1fd76d5c8608f92" />
+                  <option name="historyDocumentMap">
+                    <map>
+                      <entry key="file://$PROJECT_DIR$/docker-compose.yaml" value="version: '3.8'&#10;&#10;services:&#10;  # Redis Service&#10;  redis:&#10;    image: redis:7.0&#10;    container_name: redis_202505&#10;    ports:&#10;      - &quot;6379:6379&quot;&#10;    volumes:&#10;      - ./docker/redis/redis-data:/data&#10;    command: redis-server --appendonly yes&#10;&#10;  # MySQL Service&#10;  mysql:&#10;    image: mysql:8.0.29&#10;    container_name: mysql_202505&#10;    ports:&#10;      - &quot;3306:3306&quot;&#10;    environment:&#10;      MYSQL_ROOT_PASSWORD: bk123$%^&#10;      MYSQL_DATABASE: gordon_db&#10;      MYSQL_USER: gordon&#10;      MYSQL_PASSWORD: bk123$%^&#10;    volumes:&#10;      - ./docker/mysql/mysql-data:/var/lib/mysql&#10;      - ./docker/mysql/mysql-init:/docker-entrypoint-initdb.d&#10;&#10;  # PHPMyAdmin Service&#10;  phpmyadmin:&#10;    image: phpmyadmin&#10;    container_name: phpmyadmin_202505&#10;    ports:&#10;      - &quot;8080:80&quot;&#10;    environment:&#10;      PMA_HOST: mysql_202505&#10;      PMA_USER: root&#10;      PMA_PASSWORD: bk123$%^&#10;    depends_on:&#10;      - mysql&#10;&#10;  setup:&#10;    profiles:&#10;      - setup&#10;    build:&#10;      context: setup/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    init: true&#10;    volumes:&#10;      - ./setup/entrypoint.sh:/entrypoint.sh:ro,Z&#10;      - ./setup/lib.sh:/lib.sh:ro,Z&#10;      - ./setup/roles:/roles:ro,Z&#10;    environment:&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}&#10;      METRICBEAT_INTERNAL_PASSWORD: ${METRICBEAT_INTERNAL_PASSWORD:-}&#10;      FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}&#10;      HEARTBEAT_INTERNAL_PASSWORD: ${HEARTBEAT_INTERNAL_PASSWORD:-}&#10;      MONITORING_INTERNAL_PASSWORD: ${MONITORING_INTERNAL_PASSWORD:-}&#10;      BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      - elasticsearch&#10;&#10;  #  Elasticsearch Service&#10;  elasticsearch:&#10;    build:&#10;      context: elasticsearch/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: elasticsearch_202505&#10;    volumes:&#10;      - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z&#10;      - ./docker/elasticsearch:/usr/share/elasticsearch/data:Z&#10;    ports:&#10;      - 9200:9200&#10;      - 9300:9300&#10;    environment:&#10;      node.name: elasticsearch&#10;      ES_JAVA_OPTS: -Xms512m -Xmx512m&#10;      # Bootstrap password.&#10;      # Used to initialize the keystore during the initial startup of&#10;      # Elasticsearch. Ignored on subsequent runs.&#10;      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}&#10;      # Use single node discovery in order to disable production mode and avoid bootstrap checks.&#10;      # see: https://www.elastic.co/docs/deploy-manage/deploy/self-managed/bootstrap-checks&#10;      discovery.type: single-node&#10;    networks:&#10;      - elk&#10;&#10;  # Logstash Service&#10;  logstash:&#10;    build:&#10;      context: logstash/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: logstash_202505&#10;    volumes:&#10;      - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z&#10;      - ./docker/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z&#10;    ports:&#10;      - 5044:5044&#10;      - 50000:50000/tcp&#10;      - 50000:50000/udp&#10;      - 9600:9600&#10;    environment:&#10;      LS_JAVA_OPTS: -Xms256m -Xmx256m&#10;      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      - elasticsearch&#10;&#10;  # Kibana Service&#10;  kibana:&#10;    build:&#10;      context: kibana/&#10;      args:&#10;        ELASTIC_VERSION: ${ELASTIC_VERSION}&#10;    container_name: kibana_202505&#10;    volumes:&#10;      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z&#10;    ports:&#10;      - 5601:5601&#10;    environment:&#10;      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}&#10;    networks:&#10;      - elk&#10;    depends_on:&#10;      - elasticsearch&#10;&#10;networks:&#10;  elk:&#10;    driver: bridge&#10;&#10;volumes:&#10;  elasticsearch:&#10;" />
+                    </map>
+                  </option>
+                  <option name="messageId" value="01971734cd95722aa1fd863a99fbb381" />
+                  <option name="question" value="对以下代码进行优化：" />
+                  <option name="rating" value="UNRATED" />
+                  <option name="referenceBeans">
+                    <list />
+                  </option>
+                  <option name="status" value="SUCCESS" />
+                  <option name="variables">
+                    <list />
+                  </option>
+                </Turn>
+              </list>
+            </option>
+            <option name="updateTime" value="1748441085672" />
+          </Conversation>
+        </option>
+      </WebConversation>
+    </option>
+  </component>
+</project>
