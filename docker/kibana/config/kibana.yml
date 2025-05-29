@@ -4,7 +4,10 @@
 #
 server.name: kibana
 server.host: 0.0.0.0
-elasticsearch.hosts: [ http://elasticsearch:9200 ]
+elasticsearch.hosts: [ http://elasticsearch_202505:9200 ]
+
+i18n.locale: "zh-HK"
+
 
 monitoring.ui.container.elasticsearch.enabled: true
 monitoring.ui.container.logstash.enabled: true
@@ -23,9 +26,9 @@ elasticsearch.password: ${KIBANA_SYSTEM_PASSWORD}
 ## https://www.elastic.co/docs/deploy-manage/security/self-setup
 ## https://www.elastic.co/docs/reference/kibana/commands/kibana-encryption-keys
 #
-#xpack.security.encryptionKey:
-#xpack.encryptedSavedObjects.encryptionKey:
-#xpack.reporting.encryptionKey:
+#xpack.security.encryptionKey: "your_secure_encryption_key_1"
+#xpack.encryptedSavedObjects.encryptionKey: "your_secure_encryption_key_2"
+#xpack.reporting.encryptionKey: "your_secure_encryption_key_3"
 
 ## Fleet
 ## https://www.elastic.co/docs/reference/kibana/configuration-reference/fleet-settings
@@ -36,7 +39,7 @@ xpack.fleet.outputs:
   - id: fleet-default-output
     name: default
     type: elasticsearch
-    hosts: [ http://elasticsearch:9200 ]
+    hosts: [ http://elasticsearch_202505:9200 ]
     is_default: true
     is_default_monitoring: true
 

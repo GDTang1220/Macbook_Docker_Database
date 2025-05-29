@@ -1,14 +1,15 @@
 version: '3.8'
 
 services:
-  # Database Services
+  # Redis Services
   redis:
     image: redis:7.0
-    container_name: redis
+    container_name: redis_202505
     ports:
       - "6379:6379"
     volumes:
-      - redis_data:/data
+      - ./docker/redis/redis_data:/data
+    restart: unless-stopped
     command: redis-server --appendonly yes
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -16,9 +17,10 @@ services:
       timeout: 3s
       retries: 3
 
+  # MySQL Services
   mysql:
     image: mysql:8.0.29
-    container_name: mysql
+    container_name: mysql_202505
     ports:
       - "3306:3306"
     environment:
@@ -26,8 +28,9 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    restart: unless-stopped
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/mysql_data:/var/lib/mysql
       - ./docker/mysql/mysql-init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
@@ -36,7 +39,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpmyadmin_202505
     ports:
       - "8080:80"
     environment:
@@ -50,10 +53,10 @@ services:
   # ELK Stack Services
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
-    container_name: elasticsearch
+    container_name: elasticsearch_202505
     volumes:
-      - elasticsearch_config:/usr/share/elasticsearch/config:ro
-      - elasticsearch_data:/usr/share/elasticsearch/data
+      - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./docker/elasticsearch/data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
@@ -62,6 +65,7 @@ services:
       ES_JAVA_OPTS: -Xms1g -Xmx1g
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
       discovery.type: single-node
+    restart: unless-stopped
     networks:
       - elk
     healthcheck:
@@ -70,11 +74,12 @@ services:
       timeout: 10s
       retries: 5
 
+  # Logstash Services
   logstash:
     image: docker.elastic.co/logstash/logstash:${ELASTIC_VERSION}
-    container_name: logstash
+    container_name: logstash_202505
     volumes:
-      - ./docker/logstash/config:/usr/share/logstash/config:ro
+      - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./docker/logstash/pipeline:/usr/share/logstash/pipeline:ro
     ports:
       - 5044:5044
@@ -83,6 +88,7 @@ services:
     environment:
       LS_JAVA_OPTS: -Xms512m -Xmx512m
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}
+    restart: unless-stopped
     networks:
       - elk
     depends_on:
@@ -94,15 +100,17 @@ services:
           cpus: '1'
           memory: 1G
 
+  # Kibana Services
   kibana:
     image: docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}
-    container_name: kibana
+    container_name: kibana_202505
     volumes:
-      - ./kibana/config:/usr/share/kibana/config:ro
+      - ./docker/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
     ports:
       - 5601:5601
     environment:
       KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}
+    restart: unless-stopped
     networks:
       - elk
     depends_on:

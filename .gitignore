@@ -1,0 +1,4 @@
+docker/elasticsearch/data/*
+docker/elasticsearch/config/elasticsearch.keystore
+docker/mysql/mysql_data/*
+docker/redis/redis_data/*
